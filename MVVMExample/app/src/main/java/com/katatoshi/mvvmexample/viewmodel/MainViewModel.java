@@ -2,14 +2,24 @@ package com.katatoshi.mvvmexample.viewmodel;
 
 import android.databinding.ObservableField;
 
+import com.katatoshi.mvvmexample.AppApplication;
+import com.katatoshi.mvvmexample.model.MainModel;
+
+import javax.inject.Inject;
+
 /**
  * メインの ViewModel。
  */
 public class MainViewModel {
 
     public MainViewModel(Delegate delegate) {
+        AppApplication.getInstance().getComponent().inject(this);
+
         this.delegate = delegate;
     }
+
+    @Inject
+    MainModel mainModel;
 
     public final ObservableField<String> mainText = new ObservableField<>();
 
@@ -17,7 +27,7 @@ public class MainViewModel {
      * データを読み込みます。
      */
     public void load() {
-        mainText.set("Hello World!");
+        mainText.set(mainModel.getMainText());
     }
 
     /**

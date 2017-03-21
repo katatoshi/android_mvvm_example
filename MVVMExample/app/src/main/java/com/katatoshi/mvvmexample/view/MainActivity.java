@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Del
         binding.setViewModel(viewModel);
 
         setSupportActionBar(binding.toolbar);
-
-        viewModel.load();
     }
 
     @Override
@@ -40,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Del
         super.onResume();
 
         viewModel.addOnPropertyChangedCallback();
+
+        viewModel.load();
     }
 
     @Override

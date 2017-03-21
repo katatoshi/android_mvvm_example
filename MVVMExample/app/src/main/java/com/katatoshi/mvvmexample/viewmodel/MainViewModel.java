@@ -1,11 +1,15 @@
 package com.katatoshi.mvvmexample.viewmodel;
 
 import android.databinding.Observable;
+import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
+import android.databinding.ObservableList;
 
 import com.katatoshi.mvvmexample.AppApplication;
 import com.katatoshi.mvvmexample.BR;
+import com.katatoshi.mvvmexample.R;
 import com.katatoshi.mvvmexample.model.MainModel;
+import com.katatoshi.mvvmexample.util.databinding.recyclerview.VariableLayoutBinder;
 
 import javax.inject.Inject;
 
@@ -25,11 +29,24 @@ public class MainViewModel {
 
     public final ObservableField<String> mainText = new ObservableField<>();
 
+    public final ObservableList<String> sampleList = new ObservableArrayList<>();
+
+    public VariableLayoutBinder getBinder() {
+        return new VariableLayoutBinder(BR.viewModel, R.layout.item_sample);
+    }
+
     /**
      * データを読み込みます。
      */
     public void load() {
         mainText.set(mainModel.getMainText());
+
+        sampleList.add("apple");
+        sampleList.add("banana");
+        sampleList.add("grape");
+        sampleList.add("cherry");
+        sampleList.add("strawberry");
+        sampleList.add("meron");
     }
 
     /**

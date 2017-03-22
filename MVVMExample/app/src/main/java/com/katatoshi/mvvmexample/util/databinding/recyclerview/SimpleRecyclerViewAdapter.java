@@ -5,6 +5,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,7 @@ import java.util.Collection;
  */
 public class SimpleRecyclerViewAdapter<T> extends RecyclerView.Adapter<SimpleRecyclerViewAdapter.ViewHolder> implements View.OnClickListener, View.OnLongClickListener {
 
-    public SimpleRecyclerViewAdapter(@NonNull VariableLayoutBinder binder, @NonNull Collection<T> itemCollection) {
+    public SimpleRecyclerViewAdapter(@NonNull Collection<T> itemCollection, @NonNull VariableLayoutBinder binder, @Nullable OnItemClickListener<T> onItemClickListener, @Nullable OnItemLongClickListener<T> onItemLongClickListener) {
         onListChangedCallback = new ObservableList.OnListChangedCallback<ObservableList<T>>() {
 
             @Override
@@ -52,6 +53,10 @@ public class SimpleRecyclerViewAdapter<T> extends RecyclerView.Adapter<SimpleRec
 
         this.binder = binder;
 
+        this.onItemClickListener = onItemClickListener;
+
+        this.onItemLongClickListener = onItemLongClickListener;
+
         if (itemCollection instanceof ObservableList) {
             itemList = (ObservableList<T>) itemCollection;
         } else {
@@ -64,15 +69,15 @@ public class SimpleRecyclerViewAdapter<T> extends RecyclerView.Adapter<SimpleRec
 
     private final ObservableList.OnListChangedCallback<ObservableList<T>> onListChangedCallback;
 
-    private final VariableLayoutBinder binder;
-
     private final ObservableList<T> itemList;
 
+    private final VariableLayoutBinder binder;
+
+    private final OnItemClickListener<T> onItemClickListener;
+
+    private final OnItemLongClickListener<T> onItemLongClickListener;
+
     private LayoutInflater inflater;
-
-    public OnItemClickListener<T> onItemClickListener;
-
-    public OnItemLongClickListener<T> onItemLongClickListener;
 
     @Override
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
@@ -97,8 +102,15 @@ public class SimpleRecyclerViewAdapter<T> extends RecyclerView.Adapter<SimpleRec
         T item = itemList.get(position);
         holder.binding.setVariable(binder.variableId, item);
         holder.binding.getRoot().setTag(R.id.key_simple_recycler_view_adapter_item, item);
-        holder.binding.getRoot().setOnClickListener(this);
-        holder.binding.getRoot().setOnLongClickListener(this);
+
+        if (onItemClickListener != null) {
+            holder.binding.getRoot().setOnClickListener(this);
+        }
+
+        if (onItemLongClickListener != null) {
+            holder.binding.getRoot().setOnLongClickListener(this);
+        }
+
         holder.binding.executePendingBindings();
     }
 

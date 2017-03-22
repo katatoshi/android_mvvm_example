@@ -7,9 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.android.databinding.library.baseAdapters.BR;
 import com.katatoshi.mvvmexample.R;
 import com.katatoshi.mvvmexample.databinding.ActivityMainBinding;
+import com.katatoshi.mvvmexample.util.databinding.recyclerview.DataBindingRecyclerViewUtil;
+import com.katatoshi.mvvmexample.util.databinding.recyclerview.OnItemClickListener;
+import com.katatoshi.mvvmexample.util.databinding.recyclerview.OnItemLongClickListener;
 import com.katatoshi.mvvmexample.viewmodel.MainViewModel;
 
 /**
@@ -29,6 +34,21 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Del
 
         viewModel = new MainViewModel(this);
         binding.setViewModel(viewModel);
+
+        DataBindingRecyclerViewUtil.bind(binding.recyclerView, viewModel.sampleList, BR.viewModel, R.layout.item_sample,
+                new OnItemClickListener<String>() {
+                    @Override
+                    public void onClick(String item) {
+                        viewModel.showClickMessage(item);
+                    }
+                },
+                new OnItemLongClickListener<String>() {
+                    @Override
+                    public void onLongClick(String item) {
+                        viewModel.showLongClickMessage(item);
+                    }
+                }
+        );
 
         setSupportActionBar(binding.toolbar);
     }
@@ -77,6 +97,16 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Del
                     }
                 })
                 .show();
+    }
+
+    @Override
+    public void showClickMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLongClickMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
     //endregion
 }

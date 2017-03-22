@@ -47,12 +47,11 @@
                     android:text="@{viewModel.mainText}" />
 
                 <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:scrollbars="vertical"
-                    app:binder="@{viewModel.binder}"
-                    app:itemCollection="@{viewModel.sampleList}"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     app:listDividerEnabled="@{true}" />
 

@@ -7,9 +7,7 @@ import android.databinding.ObservableList;
 
 import com.katatoshi.mvvmexample.AppApplication;
 import com.katatoshi.mvvmexample.BR;
-import com.katatoshi.mvvmexample.R;
 import com.katatoshi.mvvmexample.model.MainModel;
-import com.katatoshi.mvvmexample.util.databinding.recyclerview.VariableLayoutBinder;
 
 import javax.inject.Inject;
 
@@ -31,10 +29,6 @@ public class MainViewModel {
 
     public final ObservableList<String> sampleList = new ObservableArrayList<>();
 
-    public VariableLayoutBinder getBinder() {
-        return new VariableLayoutBinder(BR.viewModel, R.layout.item_sample);
-    }
-
     /**
      * データを読み込みます。
      */
@@ -54,6 +48,25 @@ public class MainViewModel {
      */
     public void showMessage() {
         delegate.showMessage("メインのテキストを変更");
+    }
+
+    /**
+     * アイテムをクリックされたときのメッセージを表示します。
+     *
+     * @param viewModel アイテム
+     */
+    public void showClickMessage(String viewModel) {
+        delegate.showClickMessage("clicked: " + viewModel);
+    }
+
+
+    /**
+     * アイテムをロングクリックされたときのメッセージを表示します。
+     *
+     * @param viewModel アイテム
+     */
+    public void showLongClickMessage(String viewModel) {
+        delegate.showLongClickMessage("long clicked: " + viewModel);
     }
 
     /**
@@ -91,7 +104,12 @@ public class MainViewModel {
     private final Delegate delegate;
 
     public interface Delegate {
+
         void showMessage(String message);
+
+        void showClickMessage(String message);
+
+        void showLongClickMessage(String message);
     }
     //endregion
 }

@@ -22,7 +22,7 @@ import java.util.Collection;
  */
 public class SimpleRecyclerViewAdapter<T> extends RecyclerView.Adapter<SimpleRecyclerViewAdapter.ViewHolder> implements View.OnClickListener, View.OnLongClickListener {
 
-    public SimpleRecyclerViewAdapter(@NonNull Collection<T> itemCollection, @NonNull VariableLayoutBinder binder, @Nullable OnItemClickListener<T> onItemClickListener, @Nullable OnItemLongClickListener<T> onItemLongClickListener) {
+    public SimpleRecyclerViewAdapter(@NonNull Collection<T> itemCollection, @NonNull VariableLayoutPair variableLayoutPair, @Nullable OnItemClickListener<T> onItemClickListener, @Nullable OnItemLongClickListener<T> onItemLongClickListener) {
         onListChangedCallback = new ObservableList.OnListChangedCallback<ObservableList<T>>() {
 
             @Override
@@ -51,7 +51,7 @@ public class SimpleRecyclerViewAdapter<T> extends RecyclerView.Adapter<SimpleRec
             }
         };
 
-        this.binder = binder;
+        this.variableLayoutPair = variableLayoutPair;
 
         this.onItemClickListener = onItemClickListener;
 
@@ -71,7 +71,7 @@ public class SimpleRecyclerViewAdapter<T> extends RecyclerView.Adapter<SimpleRec
 
     private final ObservableList<T> itemList;
 
-    private final VariableLayoutBinder binder;
+    private final VariableLayoutPair variableLayoutPair;
 
     private final OnItemClickListener<T> onItemClickListener;
 
@@ -100,7 +100,7 @@ public class SimpleRecyclerViewAdapter<T> extends RecyclerView.Adapter<SimpleRec
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         T item = itemList.get(position);
-        holder.binding.setVariable(binder.variableId, item);
+        holder.binding.setVariable(variableLayoutPair.variableId, item);
         holder.binding.getRoot().setTag(R.id.key_simple_recycler_view_adapter_item, item);
 
         if (onItemClickListener != null) {
@@ -116,7 +116,7 @@ public class SimpleRecyclerViewAdapter<T> extends RecyclerView.Adapter<SimpleRec
 
     @Override
     public int getItemViewType(int position) {
-        return binder.layoutId;
+        return variableLayoutPair.layoutId;
     }
 
     @Override

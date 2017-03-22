@@ -1,11 +1,11 @@
 package com.katatoshi.mvvmexample.util.databinding.recyclerview;
 
 /**
- * variableId と layoutId を紐づけるひと。
+ * variableId と layoutId のペア。
  */
-public class VariableLayoutBinder {
+public class VariableLayoutPair {
 
-    public VariableLayoutBinder(int variableId, int layoutId) {
+    public VariableLayoutPair(int variableId, int layoutId) {
         this.variableId = variableId;
         this.layoutId = layoutId;
     }

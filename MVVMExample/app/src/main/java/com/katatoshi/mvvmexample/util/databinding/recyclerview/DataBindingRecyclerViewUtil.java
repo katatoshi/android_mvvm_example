@@ -13,7 +13,7 @@ import java.util.Collection;
 public class DataBindingRecyclerViewUtil {
 
     public static <T> void bind(RecyclerView recyclerView, @NonNull Collection<T> itemCollection, int variableId, @LayoutRes int layoutId, @Nullable OnItemClickListener<T> onItemClickListener, @Nullable OnItemLongClickListener<T> onItemLongClickListener) {
-        SimpleRecyclerViewAdapter<T> adapter = new SimpleRecyclerViewAdapter<>(itemCollection, new VariableLayoutBinder(variableId, layoutId), onItemClickListener, onItemLongClickListener);
+        SimpleRecyclerViewAdapter<T> adapter = new SimpleRecyclerViewAdapter<>(itemCollection, new VariableLayoutPair(variableId, layoutId), onItemClickListener, onItemLongClickListener);
         recyclerView.setAdapter(adapter);
     }
 

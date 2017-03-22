@@ -5,5 +5,5 @@ package com.katatoshi.mvvmexample.util.databinding.recyclerview;
  */
 public interface OnItemClickListener<T> {
 
-    void onClick(T viewModel);
+    void onClick(T item);
 }

@@ -5,5 +5,5 @@ package com.katatoshi.mvvmexample.util.databinding.recyclerview;
  */
 public interface OnItemLongClickListener<T> {
 
-    void onLongClick(T viewModel);
+    void onLongClick(T item);
 }

@@ -19,7 +19,5 @@ import dagger.Component;
 })
 public interface AppComponent {
 
-    void inject(SearchRepositoriesModel model);
-
     void inject(SearchRepositoriesViewModel viewModel);
 }

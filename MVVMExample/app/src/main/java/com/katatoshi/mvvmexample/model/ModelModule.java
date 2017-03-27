@@ -1,5 +1,7 @@
 package com.katatoshi.mvvmexample.model;
 
+import com.katatoshi.mvvmexample.api.github.SearchRepositoriesApi;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -10,7 +12,7 @@ import dagger.Provides;
 public class ModelModule {
 
     @Provides
-    SearchRepositoriesModel provideMainModel() {
-        return new SearchRepositoriesModel();
+    SearchRepositoriesModel provideMainModel(SearchRepositoriesApi searchRepositoriesApi) {
+        return new SearchRepositoriesModel(searchRepositoriesApi);
     }
 }

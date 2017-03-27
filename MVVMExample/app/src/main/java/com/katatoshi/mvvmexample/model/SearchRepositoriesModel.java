@@ -5,7 +5,6 @@ import android.databinding.Bindable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 
-import com.katatoshi.mvvmexample.AppApplication;
 import com.katatoshi.mvvmexample.BR;
 import com.katatoshi.mvvmexample.api.github.SearchRepositoriesApi;
 import com.katatoshi.mvvmexample.util.Either;
@@ -26,12 +25,12 @@ import java8.util.function.Function;
  */
 public class SearchRepositoriesModel extends BaseObservable {
 
-    SearchRepositoriesModel() {
-        AppApplication.getInstance().getComponent().inject(this);
+    @Inject
+    SearchRepositoriesModel(SearchRepositoriesApi searchRepositoriesApi) {
+        this.searchRepositoriesApi = searchRepositoriesApi;
     }
 
-    @Inject
-    SearchRepositoriesApi searchRepositoriesApi;
+    private final SearchRepositoriesApi searchRepositoriesApi;
 
 
     //region Search Repositories の結果のリスト。

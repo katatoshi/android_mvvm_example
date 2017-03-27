@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="String" />
+            type="com.katatoshi.mvvmexample.viewmodel.RepositoryViewModel" />
 
     </data>
 
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
-            android:text="@{viewModel}" />
+            android:text="@{viewModel.name}" />
 
     </RelativeLayout>
 

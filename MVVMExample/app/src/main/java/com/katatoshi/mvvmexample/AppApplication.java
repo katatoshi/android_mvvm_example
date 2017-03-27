@@ -13,6 +13,10 @@ public class AppApplication extends Application {
         return instance;
     }
 
+    protected void setInstance(AppApplication appApplication) {
+        instance = appApplication;
+    }
+
     private AppComponent component;
 
     public AppComponent getComponent() {
@@ -23,7 +27,7 @@ public class AppApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        instance = this;
+        setInstance(this);
 
         component = DaggerAppComponent.builder().build();
     }

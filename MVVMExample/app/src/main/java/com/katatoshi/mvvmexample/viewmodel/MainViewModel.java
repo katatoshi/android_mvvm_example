@@ -2,14 +2,20 @@ package com.katatoshi.mvvmexample.viewmodel;
 
 import android.databinding.Observable;
 import android.databinding.ObservableArrayList;
-import android.databinding.ObservableField;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableList;
 
 import com.katatoshi.mvvmexample.AppApplication;
 import com.katatoshi.mvvmexample.BR;
+import com.katatoshi.mvvmexample.api.github.SearchRepositoriesApi;
 import com.katatoshi.mvvmexample.model.MainModel;
+import com.katatoshi.mvvmexample.util.ListUtil;
 
 import javax.inject.Inject;
+
+import java8.util.function.Function;
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 
 /**
  * メインの ViewModel。
@@ -25,79 +31,106 @@ public class MainViewModel {
     @Inject
     MainModel mainModel;
 
-    public final ObservableField<String> mainText = new ObservableField<>();
+    public final ObservableList<RepositoryViewModel> repositoryViewModelList = new ObservableArrayList<>();
 
-    public final ObservableList<String> sampleList = new ObservableArrayList<>();
+    public final ObservableBoolean searching = new ObservableBoolean();
 
     /**
-     * データを読み込みます。
+     * フォアグラウンドに遷移したときに呼ばれるべき処理を実行します。
      */
-    public void load() {
-        mainText.set(mainModel.getMainText());
+    public void onResume() {
+        //region コールバックの Model への追加。
+        mainModel.addOnPropertyChangedCallback(onPropertyChangedCallback);
+        mainModel.addOnRepositoryListChangedCallback(onRepositoryListChangedCallback);
+        //endregion
 
-        sampleList.add("apple");
-        sampleList.add("banana");
-        sampleList.add("grape");
-        sampleList.add("cherry");
-        sampleList.add("strawberry");
-        sampleList.add("meron");
+        ListUtil.replace(repositoryViewModelList, StreamSupport.stream(mainModel.getRepositoryList())
+                .map(new Function<SearchRepositoriesApi.Result.Item, RepositoryViewModel>() {
+                    @Override
+                    public RepositoryViewModel apply(SearchRepositoriesApi.Result.Item item) {
+                        return new RepositoryViewModel(item);
+                    }
+                })
+                .collect(Collectors.<RepositoryViewModel>toList()));
+
+        searching.set(mainModel.isSearching());
     }
 
     /**
-     * メッセージを表示します。
+     * バックグラウンドに遷移したときに呼ばれるべき処理を実行します。
      */
-    public void showMessage() {
-        delegate.showMessage("メインのテキストを変更");
+    public void onPause() {
+        //region コールバックの Model からの削除。
+        mainModel.removeRepositoryListChangedCallback(onRepositoryListChangedCallback);
+        mainModel.removeOnPropertyChangedCallback(onPropertyChangedCallback);
+        //endregion
     }
 
     /**
-     * アイテムをクリックされたときのメッセージを表示します。
-     *
-     * @param viewModel アイテム
+     * リポジトリを検索します。
      */
-    public void showClickMessage(String viewModel) {
-        delegate.showClickMessage("clicked: " + viewModel);
-    }
-
-
-    /**
-     * アイテムをロングクリックされたときのメッセージを表示します。
-     *
-     * @param viewModel アイテム
-     */
-    public void showLongClickMessage(String viewModel) {
-        delegate.showLongClickMessage("long clicked: " + viewModel);
+    public void search() {
+        mainModel.search();
     }
 
     /**
-     * メインのテキストを変更します。
+     * リポジトリの言語を表示します。
      */
-    public void changeMainText() {
-        mainModel.setMainText("メインのテキストが変更されました。");
+    public void showRepositoryLanguage(RepositoryViewModel repositoryViewModel) {
+        delegate.showMessage(repositoryViewModel.language);
     }
 
-
-    //region Model の変更通知を観測するコールバック。
+    /**
+     * MainModel の変更を観測するコールバック。
+     */
     private Observable.OnPropertyChangedCallback onPropertyChangedCallback = new Observable.OnPropertyChangedCallback() {
         @Override
         public void onPropertyChanged(Observable sender, int propertyId) {
-            // switch (propertyId) で case BR.mainText とすると Android Studio 上でなぜか Constant expression required とエラーがでる（定数のはずなのに）。
+            // switch (propertyId) で case BR.searching とすると Android Studio 上でなぜか Constant expression required とエラーがでる（定数のはずなのに）。
             // ビルドはできるので無視して switch を使っても問題ないとも考えられるが、常にエラー表示となるのは紛らわしいのでやめておく。
             // Kotlin の when 式なら定数でなくてもよいので何の問題もない。
-            if (propertyId == BR.mainText) {
-                mainText.set(mainModel.getMainText());
+            if (propertyId == BR.searching) {
+                searching.set(mainModel.isSearching());
             }
         }
     };
 
-    public void addOnPropertyChangedCallback() {
-        mainModel.addOnPropertyChangedCallback(onPropertyChangedCallback);
-    }
+    /**
+     * MainModel の repositoryList の変更を観測するコールバック。
+     */
+    private ObservableList.OnListChangedCallback<ObservableList<SearchRepositoriesApi.Result.Item>> onRepositoryListChangedCallback = new ObservableList.OnListChangedCallback<ObservableList<SearchRepositoriesApi.Result.Item>>() {
 
-    public void removeOnPropertyChangedCallback() {
-        mainModel.removeOnPropertyChangedCallback(onPropertyChangedCallback);
-    }
-    //endregion
+        @Override
+        public void onChanged(ObservableList<SearchRepositoriesApi.Result.Item> sender) {
+            // 呼ばれない。
+        }
+
+        @Override
+        public void onItemRangeChanged(ObservableList<SearchRepositoriesApi.Result.Item> sender, int positionStart, int itemCount) {
+            for (int i = positionStart; i < positionStart + itemCount; i++) {
+                repositoryViewModelList.set(i, new RepositoryViewModel(mainModel.getRepositoryList().get(i)));
+            }
+        }
+
+        @Override
+        public void onItemRangeInserted(ObservableList<SearchRepositoriesApi.Result.Item> sender, int positionStart, int itemCount) {
+            for (int i = positionStart; i < positionStart + itemCount; i++) {
+                repositoryViewModelList.add(i, new RepositoryViewModel(mainModel.getRepositoryList().get(i)));
+            }
+        }
+
+        @Override
+        public void onItemRangeMoved(ObservableList<SearchRepositoriesApi.Result.Item> sender, int fromPosition, int toPosition, int itemCount) {
+            // 呼ばれない。
+        }
+
+        @Override
+        public void onItemRangeRemoved(ObservableList<SearchRepositoriesApi.Result.Item> sender, int positionStart, int itemCount) {
+            for (int i = positionStart; i < positionStart + itemCount; i++) {
+                repositoryViewModelList.remove(positionStart);
+            }
+        }
+    };
 
 
     //region Activity に移譲するメソッドたち。
@@ -106,10 +139,6 @@ public class MainViewModel {
     public interface Delegate {
 
         void showMessage(String message);
-
-        void showClickMessage(String message);
-
-        void showLongClickMessage(String message);
     }
     //endregion
 }

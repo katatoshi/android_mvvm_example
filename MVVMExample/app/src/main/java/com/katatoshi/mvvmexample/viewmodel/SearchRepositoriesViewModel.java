@@ -19,7 +19,7 @@ import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
 /**
- * メインの ViewModel。
+ * GitHub リポジトリ検索 Model。
  */
 public class SearchRepositoriesViewModel {
 

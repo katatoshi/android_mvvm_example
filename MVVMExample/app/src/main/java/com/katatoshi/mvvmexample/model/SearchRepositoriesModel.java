@@ -21,7 +21,7 @@ import java8.util.function.Consumer;
 import java8.util.function.Function;
 
 /**
- * メインの Model。
+ * GitHub リポジトリ検索 Model。
  */
 public class SearchRepositoriesModel extends BaseObservable {
 

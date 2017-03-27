@@ -10,6 +10,7 @@ import com.katatoshi.mvvmexample.BR;
 import com.katatoshi.mvvmexample.api.github.SearchRepositoriesApi;
 import com.katatoshi.mvvmexample.model.SearchRepositoriesModel;
 import com.katatoshi.mvvmexample.util.ListUtil;
+import com.katatoshi.mvvmexample.util.databinding.ObservableListUtil;
 
 import javax.inject.Inject;
 
@@ -98,39 +99,16 @@ public class SearchRepositoriesViewModel {
     /**
      * SearchRepositoriesModel の repositoryList の変更を観測するコールバック。
      */
-    private ObservableList.OnListChangedCallback<ObservableList<SearchRepositoriesApi.Result.Item>> onRepositoryListChangedCallback = new ObservableList.OnListChangedCallback<ObservableList<SearchRepositoriesApi.Result.Item>>() {
-
-        @Override
-        public void onChanged(ObservableList<SearchRepositoriesApi.Result.Item> sender) {
-            // 呼ばれない。
-        }
-
-        @Override
-        public void onItemRangeChanged(ObservableList<SearchRepositoriesApi.Result.Item> sender, int positionStart, int itemCount) {
-            for (int i = positionStart; i < positionStart + itemCount; i++) {
-                repositoryViewModelList.set(i, new RepositoryViewModel(searchRepositoriesModel.getRepositoryList().get(i)));
-            }
-        }
-
-        @Override
-        public void onItemRangeInserted(ObservableList<SearchRepositoriesApi.Result.Item> sender, int positionStart, int itemCount) {
-            for (int i = positionStart; i < positionStart + itemCount; i++) {
-                repositoryViewModelList.add(i, new RepositoryViewModel(searchRepositoriesModel.getRepositoryList().get(i)));
-            }
-        }
-
-        @Override
-        public void onItemRangeMoved(ObservableList<SearchRepositoriesApi.Result.Item> sender, int fromPosition, int toPosition, int itemCount) {
-            // 呼ばれない。
-        }
-
-        @Override
-        public void onItemRangeRemoved(ObservableList<SearchRepositoriesApi.Result.Item> sender, int positionStart, int itemCount) {
-            for (int i = positionStart; i < positionStart + itemCount; i++) {
-                repositoryViewModelList.remove(positionStart);
-            }
-        }
-    };
+    private ObservableList.OnListChangedCallback<ObservableList<SearchRepositoriesApi.Result.Item>> onRepositoryListChangedCallback = new ObservableListUtil.FollowingCallback<>(
+            // follower
+            repositoryViewModelList,
+            // mapper
+            new Function<SearchRepositoriesApi.Result.Item, RepositoryViewModel>() {
+                @Override
+                public RepositoryViewModel apply(SearchRepositoriesApi.Result.Item item) {
+                    return new RepositoryViewModel(item);
+                }
+            });
 
 
     //region Activity に移譲するメソッドたち。

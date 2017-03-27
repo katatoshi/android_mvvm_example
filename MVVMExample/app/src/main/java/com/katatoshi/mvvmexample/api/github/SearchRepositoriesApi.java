@@ -2,25 +2,19 @@ package com.katatoshi.mvvmexample.api.github;
 
 import android.support.annotation.Nullable;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import com.katatoshi.mvvmexample.util.Either;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import java8.util.concurrent.CompletableFuture;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
 
@@ -29,36 +23,12 @@ import retrofit2.http.QueryMap;
  */
 public class SearchRepositoriesApi {
 
-    SearchRepositoriesApi() {
-        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-
-        //region header 設定
-        clientBuilder.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                return chain.proceed(chain.request().newBuilder()
-                        .header("Accept", "application/vnd.github.v3+json")
-                        .build());
-            }
-        });
-        //endregion
-
-        //region ログ設定
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
-        clientBuilder.addInterceptor(interceptor);
-        //endregion
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.github.com")
-                .addConverterFactory(GsonConverterFactory.create(
-                        new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
-                ))
-                .client(clientBuilder.build())
-                .build();
+    @Inject
+    SearchRepositoriesApi(Retrofit gitHubApiRetrofit) {
+        api = gitHubApiRetrofit.create(Api.class);
     }
 
-    private final Retrofit retrofit;
+    private final Api api;
 
     public CompletableFuture<Either<Integer, Result>> get(@Nullable String q, @Nullable Sort sort, @Nullable Order order) {
         final CompletableFuture<Either<Integer, Result>> completableFuture = new CompletableFuture<>();
@@ -74,7 +44,7 @@ public class SearchRepositoriesApi {
             parameters.put("order", order.parameterValue);
         }
 
-        retrofit.create(Api.class).get(parameters).enqueue(new Callback<Result>() {
+        api.get(parameters).enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, retrofit2.Response<Result> response) {
                 if (response.isSuccessful()) {

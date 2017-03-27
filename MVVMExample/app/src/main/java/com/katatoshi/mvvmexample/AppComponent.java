@@ -1,5 +1,6 @@
 package com.katatoshi.mvvmexample;
 
+import com.katatoshi.mvvmexample.api.github.GitHubApiModule;
 import com.katatoshi.mvvmexample.model.ModelModule;
 import com.katatoshi.mvvmexample.viewmodel.MainViewModel;
 
@@ -12,6 +13,7 @@ import dagger.Component;
  */
 @Singleton
 @Component(modules = {
+        GitHubApiModule.class,
         ModelModule.class
 })
 public interface AppComponent {

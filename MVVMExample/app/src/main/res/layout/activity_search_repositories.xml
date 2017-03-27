@@ -31,11 +31,12 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <LinearLayout
+        <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:onRefresh="@{() -> viewModel.search()}"
+            app:refreshing="@{viewModel.searching}">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -46,7 +47,7 @@
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 app:listDividerEnabled="@{true}" />
 
-        </LinearLayout>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 

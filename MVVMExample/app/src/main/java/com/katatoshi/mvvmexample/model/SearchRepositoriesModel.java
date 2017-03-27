@@ -24,9 +24,9 @@ import java8.util.function.Function;
 /**
  * メインの Model。
  */
-public class MainModel extends BaseObservable {
+public class SearchRepositoriesModel extends BaseObservable {
 
-    MainModel() {
+    SearchRepositoriesModel() {
         AppApplication.getInstance().getComponent().inject(this);
     }
 

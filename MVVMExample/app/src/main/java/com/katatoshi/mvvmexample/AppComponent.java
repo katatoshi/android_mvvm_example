@@ -1,9 +1,9 @@
 package com.katatoshi.mvvmexample;
 
 import com.katatoshi.mvvmexample.api.github.GitHubApiModule;
-import com.katatoshi.mvvmexample.model.MainModel;
+import com.katatoshi.mvvmexample.model.SearchRepositoriesModel;
 import com.katatoshi.mvvmexample.model.ModelModule;
-import com.katatoshi.mvvmexample.viewmodel.MainViewModel;
+import com.katatoshi.mvvmexample.viewmodel.SearchRepositoriesViewModel;
 
 import javax.inject.Singleton;
 
@@ -19,7 +19,7 @@ import dagger.Component;
 })
 public interface AppComponent {
 
-    void inject(MainModel model);
+    void inject(SearchRepositoriesModel model);
 
-    void inject(MainViewModel viewModel);
+    void inject(SearchRepositoriesViewModel viewModel);
 }

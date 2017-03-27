@@ -9,31 +9,31 @@ import android.widget.Toast;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.katatoshi.mvvmexample.R;
-import com.katatoshi.mvvmexample.databinding.ActivityMainBinding;
+import com.katatoshi.mvvmexample.databinding.ActivitySearchRepositoriesBinding;
 import com.katatoshi.mvvmexample.util.databinding.recyclerview.DataBindingRecyclerViewUtil;
 import com.katatoshi.mvvmexample.util.databinding.recyclerview.OnItemClickListener;
-import com.katatoshi.mvvmexample.viewmodel.MainViewModel;
+import com.katatoshi.mvvmexample.viewmodel.SearchRepositoriesViewModel;
 import com.katatoshi.mvvmexample.viewmodel.RepositoryViewModel;
 
 /**
  * メインの Activity。
  */
-public class MainActivity extends AppCompatActivity implements MainViewModel.Delegate {
+public class SearchRepositoriesActivity extends AppCompatActivity implements SearchRepositoriesViewModel.Delegate {
 
-    private ActivityMainBinding binding;
+    private ActivitySearchRepositoriesBinding binding;
 
-    private MainViewModel viewModel;
+    private SearchRepositoriesViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_search_repositories);
 
-        viewModel = new MainViewModel(this);
+        viewModel = new SearchRepositoriesViewModel(this);
         binding.setViewModel(viewModel);
 
-        DataBindingRecyclerViewUtil.bind(binding.recyclerView, viewModel.repositoryViewModelList, BR.viewModel, R.layout.item_sample,
+        DataBindingRecyclerViewUtil.bind(binding.recyclerView, viewModel.repositoryViewModelList, BR.viewModel, R.layout.item_repository,
                 new OnItemClickListener<RepositoryViewModel>() {
                     @Override
                     public void onClick(RepositoryViewModel item) {

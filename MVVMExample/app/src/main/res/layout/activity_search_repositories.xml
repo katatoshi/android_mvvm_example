@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.katatoshi.mvvmexample.view.MainActivity">
+    tools:context="com.katatoshi.mvvmexample.view.SearchRepositoriesActivity">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.katatoshi.mvvmexample.viewmodel.MainViewModel" />
+            type="com.katatoshi.mvvmexample.viewmodel.SearchRepositoriesViewModel" />
 
     </data>
 

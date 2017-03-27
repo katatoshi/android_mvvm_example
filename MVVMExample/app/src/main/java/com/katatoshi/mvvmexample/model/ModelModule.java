@@ -10,7 +10,7 @@ import dagger.Provides;
 public class ModelModule {
 
     @Provides
-    MainModel provideMainModel() {
-        return new MainModel();
+    SearchRepositoriesModel provideMainModel() {
+        return new SearchRepositoriesModel();
     }
 }

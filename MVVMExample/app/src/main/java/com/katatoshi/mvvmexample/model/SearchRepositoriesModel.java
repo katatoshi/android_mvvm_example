@@ -1,11 +1,8 @@
 package com.katatoshi.mvvmexample.model;
 
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 
-import com.katatoshi.mvvmexample.BR;
 import com.katatoshi.mvvmexample.api.github.SearchRepositoriesApi;
 import com.katatoshi.mvvmexample.util.Either;
 import com.katatoshi.mvvmexample.util.ListUtil;
@@ -23,7 +20,7 @@ import java8.util.function.Function;
 /**
  * GitHub リポジトリ検索 Model。
  */
-public class SearchRepositoriesModel extends BaseObservable {
+public class SearchRepositoriesModel extends BaseModel {
 
     @Inject
     SearchRepositoriesModel(SearchRepositoriesApi searchRepositoriesApi) {
@@ -51,9 +48,9 @@ public class SearchRepositoriesModel extends BaseObservable {
 
 
     //region 検索中かどうかのプロパティ。
+    public static final String PROPERTY_SEARCING = "PROPERTY_SEARCING";
     private boolean searching;
 
-    @Bindable
     public boolean isSearching() {
         return searching;
     }
@@ -64,7 +61,7 @@ public class SearchRepositoriesModel extends BaseObservable {
         }
 
         this.searching = searching;
-        notifyPropertyChanged(BR.searching);
+        firePropertyChange(PROPERTY_SEARCING);
     }
     //endregion
 

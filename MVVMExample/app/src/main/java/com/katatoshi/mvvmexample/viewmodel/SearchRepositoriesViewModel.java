@@ -1,13 +1,12 @@
 package com.katatoshi.mvvmexample.viewmodel;
 
-import android.databinding.Observable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableList;
 
 import com.katatoshi.mvvmexample.AppApplication;
-import com.katatoshi.mvvmexample.BR;
 import com.katatoshi.mvvmexample.api.github.SearchRepositoriesApi;
+import com.katatoshi.mvvmexample.model.BaseModel;
 import com.katatoshi.mvvmexample.model.SearchRepositoriesModel;
 import com.katatoshi.mvvmexample.util.ListUtil;
 import com.katatoshi.mvvmexample.util.databinding.ObservableListUtil;
@@ -41,7 +40,7 @@ public class SearchRepositoriesViewModel {
      */
     public void onResume() {
         //region コールバックの Model への追加。
-        searchRepositoriesModel.addOnPropertyChangedCallback(onPropertyChangedCallback);
+        searchRepositoriesModel.addPropertyChangeListener(searchRepositoriesModelPropertyChangeListener);
         searchRepositoriesModel.addOnRepositoryListChangedCallback(onRepositoryListChangedCallback);
         //endregion
 
@@ -63,7 +62,7 @@ public class SearchRepositoriesViewModel {
     public void onPause() {
         //region コールバックの Model からの削除。
         searchRepositoriesModel.removeRepositoryListChangedCallback(onRepositoryListChangedCallback);
-        searchRepositoriesModel.removeOnPropertyChangedCallback(onPropertyChangedCallback);
+        searchRepositoriesModel.removePropertyChangeListener(searchRepositoriesModelPropertyChangeListener);
         //endregion
     }
 
@@ -84,14 +83,13 @@ public class SearchRepositoriesViewModel {
     /**
      * SearchRepositoriesModel の変更を観測するコールバック。
      */
-    private Observable.OnPropertyChangedCallback onPropertyChangedCallback = new Observable.OnPropertyChangedCallback() {
+    private BaseModel.PropertyChangeListener searchRepositoriesModelPropertyChangeListener = new BaseModel.PropertyChangeListener() {
         @Override
-        public void onPropertyChanged(Observable sender, int propertyId) {
-            // switch (propertyId) で case BR.searching とすると Android Studio 上でなぜか Constant expression required とエラーがでる（定数のはずなのに）。
-            // ビルドはできるので無視して switch を使っても問題ないとも考えられるが、常にエラー表示となるのは紛らわしいのでやめておく。
-            // Kotlin の when 式なら定数でなくてもよいので何の問題もない。
-            if (propertyId == BR.searching) {
-                searching.set(searchRepositoriesModel.isSearching());
+        public void propertyChange(String propertyName) {
+            switch (propertyName) {
+                case SearchRepositoriesModel.PROPERTY_SEARCING:
+                    searching.set(searchRepositoriesModel.isSearching());
+                    break;
             }
         }
     };

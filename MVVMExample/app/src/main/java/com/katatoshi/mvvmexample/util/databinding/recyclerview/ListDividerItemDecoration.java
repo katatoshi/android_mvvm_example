@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.katatoshi.mvvmexample.R;
+
 /**
  * RecyclerView 用 divider。
  */
@@ -43,24 +45,24 @@ public class ListDividerItemDecoration extends RecyclerView.ItemDecoration {
 
     public static class ListDividerItemDecorationBindingAdapter {
 
-        private static ListDividerItemDecoration listDividerItemDecoration;
-
         private static void addListDividerItemDecoration(RecyclerView recyclerView) {
-            if (listDividerItemDecoration != null) {
+            if (recyclerView.getTag(R.id.key_list_divider_item_decoration) != null) {
                 return;
             }
 
-            listDividerItemDecoration = new ListDividerItemDecoration(recyclerView.getContext());
-            recyclerView.addItemDecoration(listDividerItemDecoration);
+            ListDividerItemDecoration itemDecoration = new ListDividerItemDecoration(recyclerView.getContext());
+            recyclerView.addItemDecoration(itemDecoration);
+            recyclerView.setTag(R.id.key_list_divider_item_decoration, itemDecoration);
         }
 
         private static void removeListDividerItemDecoration(RecyclerView recyclerView) {
-            if (listDividerItemDecoration == null) {
+            ListDividerItemDecoration itemDecoration = (ListDividerItemDecoration) recyclerView.getTag(R.id.key_list_divider_item_decoration);
+            if (itemDecoration == null) {
                 return;
             }
 
-            recyclerView.removeItemDecoration(listDividerItemDecoration);
-            listDividerItemDecoration = null;
+            recyclerView.removeItemDecoration(itemDecoration);
+            recyclerView.setTag(R.id.key_list_divider_item_decoration, null);
         }
 
         @BindingAdapter("listDividerEnabled")

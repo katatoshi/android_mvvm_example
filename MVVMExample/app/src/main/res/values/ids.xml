@@ -3,4 +3,6 @@
 
     <item name="key_simple_recycler_view_adapter_item" type="id" />
 
+    <item name="key_list_divider_item_decoration" type="id" />
+
 </resources>

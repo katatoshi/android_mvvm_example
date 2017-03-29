@@ -56,12 +56,7 @@ public class SearchRepositoriesViewModel {
         //endregion
 
         ListUtil.replace(repositoryViewModelList, StreamSupport.stream(searchRepositoriesModel.getRepositoryList())
-                .map(new Function<SearchRepositoriesApi.Result.Item, RepositoryViewModel>() {
-                    @Override
-                    public RepositoryViewModel apply(SearchRepositoriesApi.Result.Item item) {
-                        return new RepositoryViewModel(item);
-                    }
-                })
+                .map(RepositoryViewModel::new)
                 .collect(Collectors.<RepositoryViewModel>toList()));
 
         queryText.set(searchRepositoriesModel.getQueryText());
@@ -117,12 +112,7 @@ public class SearchRepositoriesViewModel {
             // follower
             repositoryViewModelList,
             // mapper
-            new Function<SearchRepositoriesApi.Result.Item, RepositoryViewModel>() {
-                @Override
-                public RepositoryViewModel apply(SearchRepositoriesApi.Result.Item item) {
-                    return new RepositoryViewModel(item);
-                }
-            });
+            RepositoryViewModel::new);
 
 
     //region Activity に移譲するメソッドたち。

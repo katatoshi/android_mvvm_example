@@ -32,12 +32,7 @@ public class SearchRepositoriesActivity extends AppCompatActivity implements Sea
         binding.setViewModel(viewModel);
 
         DataBindingRecyclerViewUtil.bind(binding.recyclerView, viewModel.repositoryViewModelList, BR.viewModel, R.layout.item_repository,
-                new OnItemClickListener<RepositoryViewModel>() {
-                    @Override
-                    public void onClick(RepositoryViewModel item) {
-                        viewModel.showRepositoryLanguage(item);
-                    }
-                }
+                item -> viewModel.showRepositoryLanguage(item)
         );
 
         setSupportActionBar(binding.toolbar);

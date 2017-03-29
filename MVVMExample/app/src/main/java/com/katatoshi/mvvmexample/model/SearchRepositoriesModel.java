@@ -98,25 +98,14 @@ public class SearchRepositoriesModel extends BaseModel {
 
         CompletableFuture<Either<Integer, SearchRepositoriesApi.Result>> completableFuture = searchRepositoriesApi.get(getQueryText(), null, null);
 
-        completableFuture.thenAccept(new Consumer<Either<Integer, SearchRepositoriesApi.Result>>() {
-            @Override
-            public void accept(Either<Integer, SearchRepositoriesApi.Result> integerResultEither) {
-                integerResultEither.ifRight(new Consumer<SearchRepositoriesApi.Result>() {
-                    @Override
-                    public void accept(SearchRepositoriesApi.Result result) {
-                        ListUtil.replace(repositoryList, result.items);
-                    }
-                });
-                setSearching(false);
-            }
+        completableFuture.thenAccept(integerResultEither -> {
+            integerResultEither.ifRight(result -> ListUtil.replace(repositoryList, result.items));
+            setSearching(false);
         });
 
-        completableFuture.exceptionally(new Function<Throwable, Either<Integer, SearchRepositoriesApi.Result>>() {
-            @Override
-            public Either<Integer, SearchRepositoriesApi.Result> apply(Throwable throwable) {
-                setSearching(false);
-                return null;
-            }
+        completableFuture.exceptionally(throwable -> {
+            setSearching(false);
+            return null;
         });
     }
 }

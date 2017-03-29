@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">MVVM Example</string>
-    <string name="action_settings">Settings</string>
+    <string name="search_repositories_activity_title">Search GitHub Repositories</string>
 </resources>

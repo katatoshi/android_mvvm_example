@@ -9,6 +9,7 @@ import android.databinding.ObservableList;
 import com.katatoshi.mvvmexample.AppApplication;
 import com.katatoshi.mvvmexample.api.github.SearchRepositoriesApi;
 import com.katatoshi.mvvmexample.model.BaseModel;
+import com.katatoshi.mvvmexample.model.PropertyChangeListener;
 import com.katatoshi.mvvmexample.model.SearchRepositoriesModel;
 import com.katatoshi.mvvmexample.util.ListUtil;
 import com.katatoshi.mvvmexample.util.databinding.ObservableListUtil;
@@ -91,19 +92,18 @@ public class SearchRepositoriesViewModel {
     /**
      * SearchRepositoriesModel の変更を観測するコールバック。
      */
-    private BaseModel.PropertyChangeListener searchRepositoriesModelPropertyChangeListener = new BaseModel.PropertyChangeListener() {
-        @Override
-        public void propertyChange(String propertyName) {
-            switch (propertyName) {
-                case SearchRepositoriesModel.PROPERTY_QUERY_TEXT:
-                    queryText.set(searchRepositoriesModel.getQueryText());
-                    break;
-                case SearchRepositoriesModel.PROPERTY_SEARCING:
-                    searching.set(searchRepositoriesModel.isSearching());
-                    break;
+    private BaseModel.PropertyChangeListener searchRepositoriesModelPropertyChangeListener = new PropertyChangeListener(
+            propertyName -> {
+                switch (propertyName) {
+                    case SearchRepositoriesModel.PROPERTY_QUERY_TEXT:
+                        queryText.set(searchRepositoriesModel.getQueryText());
+                        break;
+                    case SearchRepositoriesModel.PROPERTY_SEARCING:
+                        searching.set(searchRepositoriesModel.isSearching());
+                        break;
+                }
             }
-        }
-    };
+    );
 
     /**
      * SearchRepositoriesModel の repositoryList の変更を観測するコールバック。
@@ -112,7 +112,8 @@ public class SearchRepositoriesViewModel {
             // follower
             repositoryViewModelList,
             // mapper
-            RepositoryViewModel::new);
+            RepositoryViewModel::new
+    );
 
 
     //region Activity に移譲するメソッドたち。

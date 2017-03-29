@@ -13,10 +13,10 @@ import com.katatoshi.mvvmexample.model.PropertyChangeListener;
 import com.katatoshi.mvvmexample.model.SearchRepositoriesModel;
 import com.katatoshi.mvvmexample.util.ListUtil;
 import com.katatoshi.mvvmexample.util.databinding.ObservableListUtil;
+import com.katatoshi.mvvmexample.util.databinding.OnPropertyChangedCallback;
 
 import javax.inject.Inject;
 
-import java8.util.function.Function;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
@@ -30,12 +30,7 @@ public class SearchRepositoriesViewModel {
 
         this.delegate = delegate;
 
-        queryText.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-            @Override
-            public void onPropertyChanged(Observable sender, int propertyId) {
-                searchRepositoriesModel.setQueryText(queryText.get());
-            }
-        });
+        queryText.addOnPropertyChangedCallback(new OnPropertyChangedCallback((sender, propertyId) -> searchRepositoriesModel.setQueryText(queryText.get())));
     }
 
     @Inject

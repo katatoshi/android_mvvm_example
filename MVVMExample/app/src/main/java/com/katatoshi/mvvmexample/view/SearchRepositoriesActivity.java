@@ -3,8 +3,6 @@ package com.katatoshi.mvvmexample.view;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.android.databinding.library.baseAdapters.BR;
@@ -60,22 +58,6 @@ public class SearchRepositoriesActivity extends AppCompatActivity implements Sea
         super.onPause();
 
         viewModel.onPause();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
 

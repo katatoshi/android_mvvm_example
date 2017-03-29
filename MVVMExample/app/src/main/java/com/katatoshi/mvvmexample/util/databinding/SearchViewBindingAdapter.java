@@ -3,30 +3,19 @@ package com.katatoshi.mvvmexample.util.databinding;
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
 import android.databinding.InverseBindingListener;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
 
-import java8.util.Objects;
-
 /**
- * DataBinding のカスタムセッター。
+ * SearchView のデータバインディング拡張。
  */
-public class BindingAdapterMethod {
+public class SearchViewBindingAdapter {
 
-    //region SwipeRefreshLayout
-    @BindingAdapter("onRefresh")
-    public static void onRefreshListener(SwipeRefreshLayout swipeRefreshLayout, SwipeRefreshLayout.OnRefreshListener listener) {
-        swipeRefreshLayout.setOnRefreshListener(listener);
-    }
-    //endregion
-
-
-    //region SearchView
     @BindingAdapter("query")
     public static void setQuery(SearchView searchView, String query) {
         searchView.setQuery(query, false);
     }
 
+    //region 双方向バインディングとリスナーバインディング。
     @InverseBindingAdapter(attribute = "query", event = "queryAttrChanged")
     public static String getQuery(SearchView searchView) {
         return searchView.getQuery().toString();
@@ -58,15 +47,14 @@ public class BindingAdapterMethod {
                 if (queryAttrChanged != null) {
                     queryAttrChanged.onChange();
                 }
-
                 return false;
             }
         });
     }
+    //endregion
 
     public interface OnQueryTextSubmitListener {
 
         void onQueryTextSubmit(String query);
     }
-    //endregion
 }

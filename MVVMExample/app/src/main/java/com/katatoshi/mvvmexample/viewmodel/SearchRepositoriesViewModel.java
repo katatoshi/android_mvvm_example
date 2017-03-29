@@ -1,7 +1,9 @@
 package com.katatoshi.mvvmexample.viewmodel;
 
+import android.databinding.Observable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 
 import com.katatoshi.mvvmexample.AppApplication;
@@ -26,12 +28,21 @@ public class SearchRepositoriesViewModel {
         AppApplication.getInstance().getComponent().inject(this);
 
         this.delegate = delegate;
+
+        queryText.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                searchRepositoriesModel.setQueryText(queryText.get());
+            }
+        });
     }
 
     @Inject
     SearchRepositoriesModel searchRepositoriesModel;
 
     public final ObservableList<RepositoryViewModel> repositoryViewModelList = new ObservableArrayList<>();
+
+    public final ObservableField<String> queryText = new ObservableField<>();
 
     public final ObservableBoolean searching = new ObservableBoolean();
 
@@ -52,6 +63,8 @@ public class SearchRepositoriesViewModel {
                     }
                 })
                 .collect(Collectors.<RepositoryViewModel>toList()));
+
+        queryText.set(searchRepositoriesModel.getQueryText());
 
         searching.set(searchRepositoriesModel.isSearching());
     }
@@ -87,6 +100,9 @@ public class SearchRepositoriesViewModel {
         @Override
         public void propertyChange(String propertyName) {
             switch (propertyName) {
+                case SearchRepositoriesModel.PROPERTY_QUERY_TEXT:
+                    queryText.set(searchRepositoriesModel.getQueryText());
+                    break;
                 case SearchRepositoriesModel.PROPERTY_SEARCING:
                     searching.set(searchRepositoriesModel.isSearching());
                     break;

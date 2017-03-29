@@ -46,9 +46,29 @@ public class SearchRepositoriesModel extends BaseModel {
     }
     //endregion
 
+    //region 検索クエリ文字列のプロパティ。
+    public static final String PROPERTY_QUERY_TEXT = "PROPERTY_QUERY_TEXT";
+
+    private String queryText = "topic:android+topic:mvvm";
+
+    public String getQueryText() {
+        return queryText;
+    }
+
+    public void setQueryText(String queryText) {
+        if (Objects.equals(this.queryText, queryText)) {
+            return;
+        }
+
+        this.queryText = queryText;
+        firePropertyChange(PROPERTY_QUERY_TEXT);
+    }
+    //endregion
+
 
     //region 検索中かどうかのプロパティ。
     public static final String PROPERTY_SEARCING = "PROPERTY_SEARCING";
+
     private boolean searching;
 
     public boolean isSearching() {
@@ -76,7 +96,7 @@ public class SearchRepositoriesModel extends BaseModel {
 
         setSearching(true);
 
-        CompletableFuture<Either<Integer, SearchRepositoriesApi.Result>> completableFuture = searchRepositoriesApi.get("topic:android+topic:mvvm", null, null);
+        CompletableFuture<Either<Integer, SearchRepositoriesApi.Result>> completableFuture = searchRepositoriesApi.get(getQueryText(), null, null);
 
         completableFuture.thenAccept(new Consumer<Either<Integer, SearchRepositoriesApi.Result>>() {
             @Override

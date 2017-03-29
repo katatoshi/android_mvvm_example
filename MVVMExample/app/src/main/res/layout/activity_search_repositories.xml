@@ -29,6 +29,14 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+            <android.support.v7.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:iconifiedByDefault="false"
+                app:onQueryTextSubmit="@{query -> viewModel.search()}"
+                app:query="@={viewModel.queryText}" />
+
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout

@@ -40,10 +40,10 @@ public class SearchRepositoriesActivity extends AppCompatActivity implements Sea
                 }
         );
 
-        // Activity が最初に作られたときのみ自動で検索する。
-        viewModel.search();
-
         setSupportActionBar(binding.toolbar);
+
+        // 初回のみ自動で検索する
+        viewModel.search();
     }
 
     @Override

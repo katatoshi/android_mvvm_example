@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 import com.katatoshi.mvvmexample.util.Either;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +108,7 @@ public class SearchRepositoriesApi {
 
         public List<Item> items;
 
-        public static class Item {
+        public static class Item implements Serializable {
 
             public int id;
 
@@ -117,7 +118,7 @@ public class SearchRepositoriesApi {
 
             public Owner owner;
 
-            public static class Owner {
+            public static class Owner implements Serializable {
 
                 public String login;
 

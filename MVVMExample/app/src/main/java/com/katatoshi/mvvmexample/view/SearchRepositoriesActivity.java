@@ -14,7 +14,7 @@ import com.katatoshi.mvvmexample.viewmodel.SearchRepositoriesViewModel;
 import com.katatoshi.mvvmexample.viewmodel.RepositoryViewModel;
 
 /**
- * GitHub リポジトリ検索 Model。
+ * GitHub リポジトリ検索 Activity。
  */
 public class SearchRepositoriesActivity extends AppCompatActivity implements SearchRepositoriesViewModel.Delegate {
 
@@ -56,7 +56,7 @@ public class SearchRepositoriesActivity extends AppCompatActivity implements Sea
     }
 
 
-    //region 移譲されたメソッドたちの実装。
+    //region 委譲されたメソッドたちの実装。
     @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

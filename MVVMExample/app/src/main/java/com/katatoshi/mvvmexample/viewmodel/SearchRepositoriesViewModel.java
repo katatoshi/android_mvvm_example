@@ -111,7 +111,7 @@ public class SearchRepositoriesViewModel {
     );
 
 
-    //region Activity に移譲するメソッドたち。
+    //region View に委譲するメソッドたち。
     private final Delegate delegate;
 
     public interface Delegate {

@@ -2,6 +2,8 @@ package com.katatoshi.mvvmexample;
 
 import android.app.Application;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 /**
  * アプリの Application クラス。
  */
@@ -26,6 +28,8 @@ public class AppApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        JodaTimeAndroid.init(this);
 
         setInstance(this);
 

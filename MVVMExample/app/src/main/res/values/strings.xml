@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">MVVM Example</string>
     <string name="search_repositories_activity_title">Search GitHub Repositories</string>
+    <string name="repository_activity_title">Repository Detail</string>
+    <string name="repository_activity_open_browser_text">ブラウザで見る</string>
 </resources>

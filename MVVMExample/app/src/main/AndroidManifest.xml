@@ -28,6 +28,10 @@
 
         </activity>
 
+        <activity
+            android:name=".view.RepositoryActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.katatoshi.mvvmexample.view;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.widget.Toast;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.katatoshi.mvvmexample.R;
+import com.katatoshi.mvvmexample.api.github.SearchRepositoriesApi;
 import com.katatoshi.mvvmexample.databinding.ActivitySearchRepositoriesBinding;
 import com.katatoshi.mvvmexample.util.databinding.recyclerview.DataBindingRecyclerViewUtil;
 import com.katatoshi.mvvmexample.util.databinding.recyclerview.OnItemClickListener;
@@ -32,7 +34,7 @@ public class SearchRepositoriesActivity extends AppCompatActivity implements Sea
         binding.setViewModel(viewModel);
 
         DataBindingRecyclerViewUtil.bind(binding.recyclerView, viewModel.repositoryViewModelList, BR.viewModel, R.layout.item_repository,
-                item -> viewModel.showRepositoryLanguage(item)
+                item -> viewModel.showRepository(item)
         );
 
         setSupportActionBar(binding.toolbar);
@@ -58,8 +60,8 @@ public class SearchRepositoriesActivity extends AppCompatActivity implements Sea
 
     //region 委譲されたメソッドたちの実装。
     @Override
-    public void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void showRepository(SearchRepositoriesApi.Result.Item item) {
+        RepositoryActivity.show(this, item);
     }
     //endregion
 }

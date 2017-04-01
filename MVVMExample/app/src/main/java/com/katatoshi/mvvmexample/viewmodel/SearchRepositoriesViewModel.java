@@ -78,10 +78,10 @@ public class SearchRepositoriesViewModel {
     }
 
     /**
-     * リポジトリの言語を表示します。
+     * リポジトリを表示します。
      */
-    public void showRepositoryLanguage(RepositoryViewModel repositoryViewModel) {
-        delegate.showMessage(repositoryViewModel.language);
+    public void showRepository(RepositoryViewModel repositoryViewModel) {
+        delegate.showRepository(repositoryViewModel.item);
     }
 
     /**
@@ -116,7 +116,7 @@ public class SearchRepositoriesViewModel {
 
     public interface Delegate {
 
-        void showMessage(String message);
+        void showRepository(SearchRepositoriesApi.Result.Item item);
     }
     //endregion
 }

@@ -5,6 +5,8 @@ import android.databinding.InverseBindingAdapter;
 import android.databinding.InverseBindingListener;
 import android.support.v7.widget.SearchView;
 
+import java8.util.Objects;
+
 /**
  * SearchView のデータバインディング拡張。
  */
@@ -12,6 +14,10 @@ public class SearchViewBindingAdapter {
 
     @BindingAdapter("query")
     public static void setQuery(SearchView searchView, String query) {
+        if (Objects.equals(searchView.getQuery().toString(), query)) {
+            return;
+        }
+
         searchView.setQuery(query, false);
     }
 

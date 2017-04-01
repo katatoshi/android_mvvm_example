@@ -48,6 +48,7 @@ public class SearchRepositoriesModel extends BaseModel {
     }
     //endregion
 
+
     //region 検索クエリ文字列のプロパティ。
     public static final String PROPERTY_QUERY_TEXT = "PROPERTY_QUERY_TEXT";
 

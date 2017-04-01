@@ -1,27 +1,61 @@
 package com.katatoshi.mvvmexample.viewmodel;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.katatoshi.mvvmexample.api.github.SearchRepositoriesApi;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.ISODateTimeFormat;
 
 /**
  * リポジトリ検索の個々の結果の ViewModel。
  */
 public class RepositoryViewModel {
 
-    public RepositoryViewModel(SearchRepositoriesApi.Result.Item item) {
-        id = item.id;
-        name = item.name;
-        fullName = item.fullName;
-        descripition = item.description;
-        language = item.language;
+    public RepositoryViewModel(@Nullable Delegate delegate, @NonNull SearchRepositoriesApi.Result.Item item) {
+        this.delegate = delegate;
+
+        this.item = item;
     }
 
-    public final int id;
+    public RepositoryViewModel(@NonNull SearchRepositoriesApi.Result.Item item) {
+        this(null, item);
+    }
 
-    public final String name;
+    @NonNull
+    public final SearchRepositoriesApi.Result.Item item;
 
-    public final String fullName;
+    public String getFullName() {
+        return item.fullName;
+    }
 
-    public final String descripition;
+    public String getDescription() {
+        return item.description;
+    }
 
-    public final String language;
+    public String getLanguage() {
+        return item.language;
+    }
+
+    public DateTime getUpdatedAt() {
+        return ISODateTimeFormat.dateTimeParser().parseDateTime(item.updatedAt);
+    }
+
+    public void showHtmlUrl() {
+        if (delegate != null) {
+            delegate.showBrowser(item.htmlUrl);
+        }
+    }
+
+
+    //region View に委譲するメソッドたち。
+    @Nullable
+    private final Delegate delegate;
+
+    public interface Delegate {
+
+        void showBrowser(String url);
+    }
+    //endregion
 }

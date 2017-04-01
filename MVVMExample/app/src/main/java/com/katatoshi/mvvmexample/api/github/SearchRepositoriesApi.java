@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import java8.util.concurrent.CompletableFuture;
 import retrofit2.Call;
@@ -21,6 +22,7 @@ import retrofit2.http.QueryMap;
 /**
  * GitHub リポジトリ検索 API。
  */
+@Singleton
 public class SearchRepositoriesApi {
 
     @Inject

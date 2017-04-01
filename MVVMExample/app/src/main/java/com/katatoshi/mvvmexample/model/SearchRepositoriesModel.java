@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import java8.util.Objects;
 import java8.util.concurrent.CompletableFuture;
@@ -20,6 +21,7 @@ import java8.util.function.Function;
 /**
  * GitHub リポジトリ検索 Model。
  */
+@Singleton
 public class SearchRepositoriesModel extends BaseModel {
 
     @Inject

@@ -29,6 +29,7 @@ public class SearchRepositoriesViewModel {
 
         this.delegate = delegate;
 
+        // queryText は Activity, Fragment からも変更されうるのでコールバックを追加。
         queryText.addOnPropertyChangedCallback(new OnPropertyChangedCallback((sender, propertyId) -> searchRepositoriesModel.setQueryText(queryText.get())));
     }
 
@@ -110,7 +111,7 @@ public class SearchRepositoriesViewModel {
     );
 
 
-    //region View に委譲するメソッドたち。
+    //region Activity, Fragment に委譲するメソッドたち。
     private final Delegate delegate;
 
     public interface Delegate {

@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 /**
- * Dagger2 で依存を注入するために必要なインターフェース。
+ * Dagger2 で依存注入するために必要なインターフェース。
  */
 @Singleton
 @Component(modules = {

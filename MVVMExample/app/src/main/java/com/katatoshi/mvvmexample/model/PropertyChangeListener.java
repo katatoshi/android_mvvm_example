@@ -3,7 +3,7 @@ package com.katatoshi.mvvmexample.model;
 import java8.util.function.Consumer;
 
 /**
- * ラムダ式からリスナーを生成できる BaseModel.PropertyChangeListener の実装です。
+ * ラムダ式からリスナーを生成できる BaseModel.PropertyChangeListener の実装。
  */
 public class PropertyChangeListener extends BaseModel.PropertyChangeListener {
 

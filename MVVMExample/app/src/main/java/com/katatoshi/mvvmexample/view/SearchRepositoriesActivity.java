@@ -29,6 +29,7 @@ public class SearchRepositoriesActivity extends AppCompatActivity implements Sea
         viewModel = new SearchRepositoriesViewModel(this);
         binding.setViewModel(viewModel);
 
+        // RecyclerView と ObservableList のバインド。リストアイテムの Variable ID, Layout ID も指定。必要なら ClickListener なども指定。
         DataBindingRecyclerViewUtil.bind(binding.recyclerView, viewModel.repositoryViewModelList, BR.viewModel, R.layout.item_repository,
                 item -> viewModel.showRepository(item)
         );

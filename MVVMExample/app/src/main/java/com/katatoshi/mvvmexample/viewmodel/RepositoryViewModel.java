@@ -49,7 +49,7 @@ public class RepositoryViewModel {
     }
 
 
-    //region View に委譲するメソッドたち。
+    //region Activity, Fragment に委譲するメソッドたち。
     @Nullable
     private final Delegate delegate;
 

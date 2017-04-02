@@ -5,7 +5,7 @@ import android.databinding.Observable;
 import java8.util.function.BiConsumer;
 
 /**
- * ラムダ式からリスナーを生成できる Observable.OnPropertyChangedCallback の実装です。
+ * ラムダ式からリスナーを生成できる Observable.OnPropertyChangedCallback の実装。
  */
 public class OnPropertyChangedCallback extends Observable.OnPropertyChangedCallback {
 

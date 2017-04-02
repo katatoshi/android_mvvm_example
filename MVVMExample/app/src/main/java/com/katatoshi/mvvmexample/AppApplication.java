@@ -9,6 +9,8 @@ import net.danlew.android.joda.JodaTimeAndroid;
  */
 public class AppApplication extends Application {
 
+
+    //region アプリの Application クラスのインスタンス。どこからでも利用できるようにするために用意。
     private static AppApplication instance;
 
     public static AppApplication getInstance() {
@@ -18,12 +20,17 @@ public class AppApplication extends Application {
     protected void setInstance(AppApplication appApplication) {
         instance = appApplication;
     }
+    //endregion
 
+
+    //region AppComponent のインスタンス。ViewModel, Activity, Fragment などで inject する。
     private AppComponent component;
 
     public AppComponent getComponent() {
         return component;
     }
+    //endregion
+
 
     @Override
     public void onCreate() {

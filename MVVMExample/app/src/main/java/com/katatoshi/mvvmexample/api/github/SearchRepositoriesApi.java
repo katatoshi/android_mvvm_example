@@ -48,6 +48,7 @@ public class SearchRepositoriesApi {
         }
 
         api.get(parameters).enqueue(new Callback<Result>() {
+
             @Override
             public void onResponse(Call<Result> call, retrofit2.Response<Result> response) {
                 if (response.isSuccessful()) {

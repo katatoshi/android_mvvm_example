@@ -40,6 +40,7 @@ public class SearchViewBindingAdapter {
     @BindingAdapter({"onQueryTextSubmit", "queryAttrChanged"})
     public static void setOnQueryTextListener(SearchView searchView, final OnQueryTextSubmitListener onQueryTextSubmitListener, final InverseBindingListener queryAttrChanged) {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (onQueryTextSubmitListener != null) {

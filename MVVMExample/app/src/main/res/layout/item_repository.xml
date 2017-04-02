@@ -36,7 +36,7 @@
                     android:layout_centerVertical="true"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:text="@{viewModel.fullName}"
+                    android:text="@{viewModel.fullName, default=`dtrupenn/Tetris`}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                 <TextView
@@ -46,7 +46,7 @@
                     android:layout_centerVertical="true"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:text="@{viewModel.language}"
+                    android:text="@{viewModel.language, default=`Assembly`}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
             </RelativeLayout>
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:lines="1"
-                android:text="@{viewModel.description}"
+                android:text="@{viewModel.description, default=`A C implementation of Tetris using Pennsim through LC4`}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         </LinearLayout>

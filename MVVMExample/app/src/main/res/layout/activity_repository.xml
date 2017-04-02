@@ -58,7 +58,7 @@
                         android:layout_centerVertical="true"
                         android:ellipsize="end"
                         android:lines="1"
-                        android:text="@{viewModel.fullName}"
+                        android:text="@{viewModel.fullName, default=`dtrupenn/Tetris`}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                     <TextView
@@ -68,7 +68,7 @@
                         android:layout_centerVertical="true"
                         android:ellipsize="end"
                         android:lines="1"
-                        android:text="@{viewModel.language}"
+                        android:text="@{viewModel.language, default=`Assembly`}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
                 </RelativeLayout>
@@ -80,7 +80,7 @@
                     android:layout_marginStart="16dp"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:text="@{`Updated at ` + viewModel.updatedAt.toString(`yyyy/MM/dd HH:mm`)}"
+                    android:text="@{`Updated at ` + viewModel.updatedAt.toString(`yyyy/MM/dd HH:mm`), default=`Updated at 2013/01/06 02:58`}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
                 <TextView
@@ -103,7 +103,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="@{viewModel.description}"
+                    android:text="@{viewModel.description, default=`A C implementation of Tetris using Pennsim through LC4`}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             </LinearLayout>

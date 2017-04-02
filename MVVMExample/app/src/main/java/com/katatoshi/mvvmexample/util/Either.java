@@ -1,6 +1,7 @@
 package com.katatoshi.mvvmexample.util;
 
 import java8.util.function.Consumer;
+import java8.util.function.Function;
 
 public class Either<L, R> {
 
@@ -46,6 +47,14 @@ public class Either<L, R> {
             leftAction.accept(left);
         } else {
             rightAction.accept(right);
+        }
+    }
+
+    public <S> Either<L, S> flatMap(Function<R, Either<L, S>> f) {
+        if (left != null) {
+            return Either.left(left);
+        } else {
+            return f.apply(right);
         }
     }
 }

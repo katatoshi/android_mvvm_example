@@ -15,8 +15,6 @@ import javax.inject.Singleton;
 
 import java8.util.Objects;
 import java8.util.concurrent.CompletableFuture;
-import java8.util.function.Consumer;
-import java8.util.function.Function;
 
 /**
  * GitHub リポジトリ検索 Model。

@@ -1,19 +1,15 @@
 package com.katatoshi.mvvmexample.view;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
-import com.android.databinding.library.baseAdapters.BR;
+import com.katatoshi.mvvmexample.BR;
 import com.katatoshi.mvvmexample.R;
 import com.katatoshi.mvvmexample.api.github.SearchRepositoriesApi;
 import com.katatoshi.mvvmexample.databinding.ActivitySearchRepositoriesBinding;
 import com.katatoshi.mvvmexample.util.databinding.recyclerview.DataBindingRecyclerViewUtil;
-import com.katatoshi.mvvmexample.util.databinding.recyclerview.OnItemClickListener;
 import com.katatoshi.mvvmexample.viewmodel.SearchRepositoriesViewModel;
-import com.katatoshi.mvvmexample.viewmodel.RepositoryViewModel;
 
 /**
  * GitHub リポジトリ検索 Activity。

@@ -1,7 +1,6 @@
 package com.katatoshi.mvvmexample;
 
 import com.katatoshi.mvvmexample.api.github.GitHubApiModule;
-import com.katatoshi.mvvmexample.model.SearchRepositoriesModel;
 import com.katatoshi.mvvmexample.model.ModelModule;
 import com.katatoshi.mvvmexample.viewmodel.SearchRepositoriesViewModel;
 

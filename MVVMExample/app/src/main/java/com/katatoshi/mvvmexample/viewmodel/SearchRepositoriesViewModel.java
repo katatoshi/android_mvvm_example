@@ -1,6 +1,5 @@
 package com.katatoshi.mvvmexample.viewmodel;
 
-import android.databinding.Observable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;

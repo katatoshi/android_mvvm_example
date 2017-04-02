@@ -3,16 +3,12 @@ package com.katatoshi.mvvmexample.api.github;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
-
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -30,14 +26,9 @@ public class GitHubApiModule {
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
 
         //region header 設定
-        clientBuilder.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                return chain.proceed(chain.request().newBuilder()
-                        .header("Accept", "application/vnd.github.v3+json")
-                        .build());
-            }
-        });
+        clientBuilder.addInterceptor(chain -> chain.proceed(chain.request().newBuilder()
+                .header("Accept", "application/vnd.github.v3+json")
+                .build()));
         //endregion
 
         //region ログ設定

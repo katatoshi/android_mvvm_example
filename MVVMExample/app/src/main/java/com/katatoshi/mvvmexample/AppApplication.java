@@ -1,6 +1,7 @@
 package com.katatoshi.mvvmexample;
 
 import android.app.Application;
+import android.support.annotation.VisibleForTesting;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -9,28 +10,42 @@ import net.danlew.android.joda.JodaTimeAndroid;
  */
 public class AppApplication extends Application {
 
-
-    //region アプリの Application クラスのインスタンス。どこからでも利用できるようにするために用意。
+    /**
+     * アプリの Application クラスのインスタンス。
+     */
     private static AppApplication instance;
 
-    public static AppApplication getInstance() {
-        return instance;
+    /**
+     * テスト用にアプリの Application クラスのインスタンスをセットします。
+     */
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public static void setInstance(AppApplication instance) {
+        AppApplication.instance = instance;
     }
 
-    protected void setInstance(AppApplication appApplication) {
-        instance = appApplication;
+    /**
+     * クラスの依存関係のインスタンスのゲッター。ViewModel などで inject するために使います。
+     *
+     * @return クラスの依存関係
+     */
+    public static AppComponent getComponent() {
+        return instance.component;
     }
-    //endregion
 
+    /**
+     * テスト用にクラスの依存関係のインスタンスをセットします。
+     *
+     * @param component クラスの依存関係
+     */
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public static void setComponent(AppComponent component) {
+        instance.component = component;
+    }
 
-    //region AppComponent のインスタンス。ViewModel, Activity, Fragment などで inject する。
+    /**
+     * クラスの依存関係のインスタンス。
+     */
     private AppComponent component;
-
-    public AppComponent getComponent() {
-        return component;
-    }
-    //endregion
-
 
     @Override
     public void onCreate() {
@@ -38,8 +53,8 @@ public class AppApplication extends Application {
 
         JodaTimeAndroid.init(this);
 
-        setInstance(this);
+        instance = this;
 
-        component = DaggerAppComponent.builder().build();
+        component = DaggerAppComponent.create();
     }
 }

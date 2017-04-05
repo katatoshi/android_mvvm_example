@@ -25,7 +25,7 @@ import java8.util.stream.StreamSupport;
 public class SearchRepositoriesViewModel {
 
     public SearchRepositoriesViewModel(Delegate delegate) {
-        AppApplication.getInstance().getComponent().inject(this);
+        AppApplication.getComponent().inject(this);
 
         this.delegate = delegate;
 

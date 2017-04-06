@@ -45,21 +45,21 @@ public class ListUtilTest {
             }
 
             @Test
-            public void 実行後の置き換え先のリストのサイズは置き換え元のリストのサイズと等しい() {
+            public void 実行後の置き換え先のリストのサイズは置き換え元のリストのサイズと等しい() throws Exception {
                 ListUtil.replace(dstList, srcList);
 
                 assertThat(dstList, hasSize(5));
             }
 
             @Test
-            public void 実行後の置き換え先のリストの要素は置き換え元のリストのサイズと順番も含めて等しい() {
+            public void 実行後の置き換え先のリストの要素は置き換え元のリストのサイズと順番も含めて等しい() throws Exception {
                 ListUtil.replace(dstList, srcList);
 
                 assertThat(dstList, contains("Taro", "Jiro", "Saburo", "Shiro", "Goro"));
             }
 
             @Test
-            public void 実行中の置き換え先のリストのsetメソッドの呼び出し回数は3回でaddメソッドの呼び出し回数は2回でremoveメソッドは一度も呼び出されない() {
+            public void 実行中の置き換え先のリストのsetメソッドの呼び出し回数は3回でaddメソッドの呼び出し回数は2回でremoveメソッドは一度も呼び出されない() throws Exception {
                 List<String> mock = mock(List.class);
                 when(mock.size()).thenReturn(3);
 
@@ -93,21 +93,21 @@ public class ListUtilTest {
             }
 
             @Test
-            public void 実行後の置き換え先のリストのサイズは置き換え元のリストのサイズと等しい() {
+            public void 実行後の置き換え先のリストのサイズは置き換え元のリストのサイズと等しい() throws Exception {
                 ListUtil.replace(dstList, srcList);
 
                 assertThat(dstList, hasSize(3));
             }
 
             @Test
-            public void 実行後の置き換え先のリストの要素は置き換え元のリストのサイズと順番も含めて等しい() {
+            public void 実行後の置き換え先のリストの要素は置き換え元のリストのサイズと順番も含めて等しい() throws Exception {
                 ListUtil.replace(dstList, srcList);
 
                 assertThat(dstList, contains("Taro", "Jiro", "Saburo"));
             }
 
             @Test
-            public void 実行中の置き換え先のリストのsetメソッドの呼び出し回数は3回でremoveメソッドの呼び出し回数は2回でaddメソッドは一度も呼び出されない() {
+            public void 実行中の置き換え先のリストのsetメソッドの呼び出し回数は3回でremoveメソッドの呼び出し回数は2回でaddメソッドは一度も呼び出されない() throws Exception {
                 List<String> mock = mock(List.class);
                 when(mock.size()).thenReturn(5);
 
@@ -143,21 +143,21 @@ public class ListUtilTest {
             }
 
             @Test
-            public void 実行後の置き換え先のリストのサイズは置き換え元のリストのサイズと等しい() {
+            public void 実行後の置き換え先のリストのサイズは置き換え元のリストのサイズと等しい() throws Exception {
                 ListUtil.replace(dstList, srcList);
 
                 assertThat(dstList, hasSize(5));
             }
 
             @Test
-            public void 実行後の置き換え先のリストの要素は置き換え元のリストのサイズと順番も含めて等しい() {
+            public void 実行後の置き換え先のリストの要素は置き換え元のリストのサイズと順番も含めて等しい() throws Exception {
                 ListUtil.replace(dstList, srcList);
 
                 assertThat(dstList, contains("Taro", "Jiro", "Saburo", "Shiro", "Goro"));
             }
 
             @Test
-            public void 実行中の置き換え先のリストのsetメソッドの呼び出し回数は5回でaddメソッドとremoveメソッドは一度も呼び出されない() {
+            public void 実行中の置き換え先のリストのsetメソッドの呼び出し回数は5回でaddメソッドとremoveメソッドは一度も呼び出されない() throws Exception {
                 List<String> mock = mock(List.class);
                 when(mock.size()).thenReturn(5);
 

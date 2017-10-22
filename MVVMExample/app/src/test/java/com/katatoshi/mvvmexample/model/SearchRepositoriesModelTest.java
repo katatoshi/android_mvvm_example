@@ -50,12 +50,7 @@ public class SearchRepositoriesModelTest {
 
         @Before
         public void setUp() throws Exception {
-            AppApplication.setInstance(new AppApplication());
-
-            TestAppComponent component = DaggerTestAppComponent.create();
-            AppApplication.setComponent(component);
-
-            component.inject(this);
+            DaggerTestAppComponent.create().inject(this);
 
             completableFuture = new CompletableFuture<>();
             when(searchRepositoriesApi.get(anyString(), any(), any())).thenReturn(completableFuture);
@@ -136,12 +131,7 @@ public class SearchRepositoriesModelTest {
 
         @Before
         public void setUp() throws Exception {
-            AppApplication.setInstance(new AppApplication());
-
-            TestAppComponent component = DaggerTestAppComponent.create();
-            AppApplication.setComponent(component);
-
-            component.inject(this);
+            DaggerTestAppComponent.create().inject(this);
 
             completableFuture = new CompletableFuture<>();
             when(searchRepositoriesApi.get(anyString(), any(), any())).thenReturn(completableFuture);
@@ -183,12 +173,7 @@ public class SearchRepositoriesModelTest {
 
         @Before
         public void setUp() throws Exception {
-            AppApplication.setInstance(new AppApplication());
-
-            TestAppComponent component = DaggerTestAppComponent.create();
-            AppApplication.setComponent(component);
-
-            component.inject(this);
+            DaggerTestAppComponent.create().inject(this);
 
             completableFuture = new CompletableFuture<>();
             when(searchRepositoriesApi.get(anyString(), any(), any())).thenReturn(completableFuture);
@@ -230,12 +215,7 @@ public class SearchRepositoriesModelTest {
 
         @Before
         public void setUp() throws Exception {
-            AppApplication.setInstance(new AppApplication());
-
-            TestAppComponent component = DaggerTestAppComponent.create();
-            AppApplication.setComponent(component);
-
-            component.inject(this);
+            DaggerTestAppComponent.create().inject(this);
 
             completableFuture = new CompletableFuture<>();
             when(searchRepositoriesApi.get(anyString(), any(), any())).thenReturn(completableFuture);
@@ -316,12 +296,7 @@ public class SearchRepositoriesModelTest {
 
         @Before
         public void setUp() throws Exception {
-            AppApplication.setInstance(new AppApplication());
-
-            TestAppComponent component = DaggerTestAppComponent.create();
-            AppApplication.setComponent(component);
-
-            component.inject(this);
+            DaggerTestAppComponent.create().inject(this);
 
             completableFuture = new CompletableFuture<>();
             when(searchRepositoriesApi.get(anyString(), any(), any())).thenReturn(completableFuture);
@@ -392,12 +367,7 @@ public class SearchRepositoriesModelTest {
 
         @Before
         public void setUp() throws Exception {
-            AppApplication.setInstance(new AppApplication());
-
-            TestAppComponent component = DaggerTestAppComponent.create();
-            AppApplication.setComponent(component);
-
-            component.inject(this);
+            DaggerTestAppComponent.create().inject(this);
 
             completableFuture = new CompletableFuture<>();
             when(searchRepositoriesApi.get(anyString(), any(), any())).thenReturn(completableFuture);

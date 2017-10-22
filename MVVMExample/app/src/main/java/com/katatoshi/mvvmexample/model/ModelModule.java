@@ -15,7 +15,7 @@ public class ModelModule {
 
     @Singleton
     @Provides
-    SearchRepositoriesModel provideMainModel(SearchRepositoriesApi searchRepositoriesApi) {
+    public static SearchRepositoriesModel provideMainModel(SearchRepositoriesApi searchRepositoriesApi) {
         return new SearchRepositoriesModel(searchRepositoriesApi);
     }
 }

@@ -9,14 +9,14 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 /**
- * ローカルユニットテストの依存関係。
+ * ユニットテストの依存関係。
  */
 @Singleton
 @Component(modules = {
         TestGitHubApiModule.class,
         ModelModule.class
 })
-public interface TestAppComponent extends AppComponent {
+public interface TestAppComponent {
 
     void inject(SearchRepositoriesModelTest.検索結果が0件の場合 test);
     void inject(SearchRepositoriesModelTest.検索結果が1件の場合 test);

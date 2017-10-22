@@ -1,29 +1,25 @@
 package com.katatoshi.mvvmexample.viewmodel;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.katatoshi.mvvmexample.api.github.SearchRepositoriesApi;
 
+import org.greenrobot.eventbus.EventBus;
 import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
+
+import javax.inject.Inject;
 
 /**
  * リポジトリ検索の個々の結果の ViewModel。
  */
 public class RepositoryViewModel {
 
-    public RepositoryViewModel(@Nullable Delegate delegate, @NonNull SearchRepositoriesApi.Result.Item item) {
-        this.delegate = delegate;
-
+    @Inject
+    public RepositoryViewModel(SearchRepositoriesApi.Result.Item item) {
         this.item = item;
     }
 
-    public RepositoryViewModel(@NonNull SearchRepositoriesApi.Result.Item item) {
-        this(null, item);
-    }
+    private final EventBus eventBus = EventBus.builder().build();
 
-    @NonNull
     public final SearchRepositoriesApi.Result.Item item;
 
     public String getFullName() {
@@ -43,19 +39,26 @@ public class RepositoryViewModel {
     }
 
     public void showHtmlUrl() {
-        if (delegate != null) {
-            delegate.showBrowser(item.htmlUrl);
-        }
+        eventBus.post(new ShowBrowserEvent(item.htmlUrl));
     }
 
 
-    //region Activity, Fragment に委譲するメソッドたち。
-    @Nullable
-    private final Delegate delegate;
+    //region EventBus
+    public void registerEventBus(Object subscriber) {
+        eventBus.register(subscriber);
+    }
 
-    public interface Delegate {
+    public void unregisterEventBus(Object subscriber) {
+        eventBus.unregister(subscriber);
+    }
 
-        void showBrowser(String url);
+    public static class ShowBrowserEvent {
+
+        ShowBrowserEvent(String url) {
+            this.url = url;
+        }
+
+        public final String url;
     }
     //endregion
 }

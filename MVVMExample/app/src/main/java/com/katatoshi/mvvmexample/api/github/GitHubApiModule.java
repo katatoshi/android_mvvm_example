@@ -22,7 +22,7 @@ public class GitHubApiModule {
     @Singleton
     @Provides
     @Named("GitHubApi")
-    Retrofit provideGitHubApiRetrofit() {
+    public static Retrofit provideGitHubApiRetrofit() {
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
 
         //region header 設定
@@ -48,7 +48,7 @@ public class GitHubApiModule {
 
     @Singleton
     @Provides
-    SearchRepositoriesApi provideSearchRepositoriesApi(@Named("GitHubApi") Retrofit gitHubApiRetrofit) {
+    public static SearchRepositoriesApi provideSearchRepositoriesApi(@Named("GitHubApi") Retrofit gitHubApiRetrofit) {
         return new SearchRepositoriesApi(gitHubApiRetrofit);
     }
 };

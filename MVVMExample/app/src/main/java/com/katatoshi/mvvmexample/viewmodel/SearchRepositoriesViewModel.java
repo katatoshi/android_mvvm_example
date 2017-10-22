@@ -5,7 +5,6 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 
-import com.katatoshi.mvvmexample.AppApplication;
 import com.katatoshi.mvvmexample.api.github.SearchRepositoriesApi;
 import com.katatoshi.mvvmexample.model.BaseModel;
 import com.katatoshi.mvvmexample.model.PropertyChangeListener;
@@ -13,6 +12,8 @@ import com.katatoshi.mvvmexample.model.SearchRepositoriesModel;
 import com.katatoshi.mvvmexample.util.ListUtil;
 import com.katatoshi.mvvmexample.util.databinding.ObservableListUtil;
 import com.katatoshi.mvvmexample.util.databinding.OnPropertyChangedCallback;
+
+import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
@@ -24,17 +25,30 @@ import java8.util.stream.StreamSupport;
  */
 public class SearchRepositoriesViewModel {
 
-    public SearchRepositoriesViewModel(Delegate delegate) {
-        AppApplication.getComponent().inject(this);
+    @Inject
+    public SearchRepositoriesViewModel(SearchRepositoriesModel searchRepositoriesModel) {
+        this.searchRepositoriesModel = searchRepositoriesModel;
 
-        this.delegate = delegate;
+        searchRepositoriesModelPropertyChangeListener = new PropertyChangeListener(
+                propertyName -> {
+                    switch (propertyName) {
+                        case SearchRepositoriesModel.PROPERTY_QUERY_TEXT:
+                            queryText.set(searchRepositoriesModel.getQueryText());
+                            break;
+                        case SearchRepositoriesModel.PROPERTY_SEARCING:
+                            searching.set(searchRepositoriesModel.isSearching());
+                            break;
+                    }
+                }
+        );
 
         // queryText は Activity, Fragment からも変更されうるのでコールバックを追加。
         queryText.addOnPropertyChangedCallback(new OnPropertyChangedCallback((sender, propertyId) -> searchRepositoriesModel.setQueryText(queryText.get())));
     }
 
-    @Inject
-    SearchRepositoriesModel searchRepositoriesModel;
+    private final SearchRepositoriesModel searchRepositoriesModel;
+
+    private final EventBus eventBus = EventBus.builder().build();
 
     public final ObservableList<RepositoryViewModel> repositoryViewModelList = new ObservableArrayList<>();
 
@@ -81,24 +95,13 @@ public class SearchRepositoriesViewModel {
      * リポジトリを表示します。
      */
     public void showRepository(RepositoryViewModel repositoryViewModel) {
-        delegate.showRepository(repositoryViewModel.item);
+        eventBus.post(new ShowRepositoryEvent(repositoryViewModel.item));
     }
 
     /**
      * SearchRepositoriesModel の変更を観測するコールバック。
      */
-    private BaseModel.PropertyChangeListener searchRepositoriesModelPropertyChangeListener = new PropertyChangeListener(
-            propertyName -> {
-                switch (propertyName) {
-                    case SearchRepositoriesModel.PROPERTY_QUERY_TEXT:
-                        queryText.set(searchRepositoriesModel.getQueryText());
-                        break;
-                    case SearchRepositoriesModel.PROPERTY_SEARCING:
-                        searching.set(searchRepositoriesModel.isSearching());
-                        break;
-                }
-            }
-    );
+    private final BaseModel.PropertyChangeListener searchRepositoriesModelPropertyChangeListener;
 
     /**
      * SearchRepositoriesModel の repositoryList の変更を観測するコールバック。
@@ -111,12 +114,22 @@ public class SearchRepositoriesViewModel {
     );
 
 
-    //region Activity, Fragment に委譲するメソッドたち。
-    private final Delegate delegate;
+    //region EventBus
+    public void registerEventBus(Object subscriber) {
+        eventBus.register(subscriber);
+    }
 
-    public interface Delegate {
+    public void unregisterEventBus(Object subscriber) {
+        eventBus.unregister(subscriber);
+    }
 
-        void showRepository(SearchRepositoriesApi.Result.Item item);
+    public static class ShowRepositoryEvent {
+
+        ShowRepositoryEvent(SearchRepositoriesApi.Result.Item item) {
+            this.item = item;
+        }
+
+        public final SearchRepositoriesApi.Result.Item item;
     }
     //endregion
 }
